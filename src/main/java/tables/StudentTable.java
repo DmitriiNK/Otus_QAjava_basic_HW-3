@@ -2,6 +2,7 @@ package tables;
 
 import db.IDBExecute;
 import db.MySQLDBExecutor;
+import dob.Const;
 import dob.Student;
 
 import java.sql.ResultSet;
@@ -43,11 +44,33 @@ private final String tableName  = "Students";
         return students;
     }
     public void studentCount() throws SQLException {
-        String listStudentQuery = String.format("select count(*) from %s", "Students");
+        String listStudentQuery = (createCountSelectStm(Const.STUDENT_TABLE));
         IDBExecute idbExecute = new MySQLDBExecutor();
         ResultSet resultSet = idbExecute.execute(listStudentQuery);
         while (resultSet.next())
             System.out.println((resultSet.getInt(1)));
+    }
+    private static String createSelectStm(String ... args){
+        StringBuffer sql = new StringBuffer("SELECT *");
+        for(int i = 0; i < args.length - 1; i++) {
+            sql.append(args[i]);
+            sql.append(", ");
+        }
+        sql.delete(sql.length() - 2, sql.length() - 1);
+        sql.append(" FROM ");
+        sql.append(args[args.length - 1]);
+        return sql.toString();
+    }
+    private static String createCountSelectStm(String ... args){
+        StringBuffer sql = new StringBuffer("SELECT count(*)");
+        for(int i = 0; i < args.length - 1; i++) {
+            sql.append(args[i]);
+            sql.append(", ");
+        }
+        sql.delete(sql.length() - 1, sql.length() - 1);
+        sql.append(" FROM ");
+        sql.append(args[args.length - 1]);
+        return sql.toString();
     }
 
 }

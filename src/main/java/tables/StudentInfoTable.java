@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentInfoTable extends TableAbs {
-    private final String tableName1  = "Students";
-    private final String tableName2  = "Grou";
-    private final String tableName3  = "Сurator";
     public List list(String[] predicates) throws SQLException {
         String listStudentQuery =(createSelectStm(Const.STUDENT_FIO,Const.STUDENT_SEX,Const.GROUP_NAME,Const.CURATOR_FIO,Const.STUDENT_TABLE)+
                 Const.INNER_JOIN + Const.GROUP_TABLE +

@@ -21,11 +21,11 @@ class Main {
         List<StudentsInfo> studentsInfo = studentTableInfo.list(predicates);
         List<Student> studentsWomen = ((StudentTable) studentTable).listWomen(predicates);
 
-        // Запросы//
-       printAllStudent(students);// Вывести на экран информацию о всех студентах;
-       ((StudentTable) studentTable).studentCount(); // Вывести на экран количество студентов;
-       printStudentInfo(studentsInfo); //Вывести на экран информацию о всех студентах включая название группы и имя куратора
-       printAllStudent(studentsWomen); //Вывести студенток
-       printGroupInfo(studentsInfo); //Вывести список групп с их кураторами
+        // Запросы
+      printAllStudent(students);// Вывести на экран информацию о всех студентах;
+        ((StudentTable) studentTable).studentCount(); // Вывести на экран количество студентов;
+      printStudentInfo(studentsInfo); //Вывести на экран информацию о всех студентах включая название группы и имя куратора
+      // printAllStudent(studentsWomen); //Вывести студенток
+      // printGroupInfo(studentsInfo); //Вывести список групп с их кураторами
     }
 }  
