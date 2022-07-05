@@ -2,6 +2,7 @@ package tables;
 
 import db.IDBExecute;
 import db.MySQLDBExecutor;
+import dob.Const;
 import dob.Student;
 import dob.StudentsInfo;
 
@@ -15,13 +16,11 @@ public class StudentInfoTable extends TableAbs {
     private final String tableName2  = "Grou";
     private final String tableName3  = "Сurator";
     public List list(String[] predicates) throws SQLException {
-        String listStudentQuery = "select "+
-                "Students.Fio,Students.Sex,Grou.Name,Сurator.Fio " +
-                "from " +tableName1 +
-                " INNER JOIN "+ tableName2 + " ON " +
-                "Students.Id_group = Grou.ID" +
-                " INNER JOIN " + tableName3 + " ON " +
-                "Grou.Id_curator = Сurator.ID";
+        String listStudentQuery =(createSelectStm(Const.STUDENT_FIO,Const.STUDENT_SEX,Const.GROUP_NAME,Const.CURATOR_FIO,Const.STUDENT_TABLE)+
+                Const.INNER_JOIN + Const.GROUP_TABLE +
+                " ON " + Const.FOREIGN_KEY_GROUP_STUDENT +
+                Const.INNER_JOIN + Const.CURATOR_TABLE +
+                " ON " + Const.FOREIGN_KEY_CURATOR_GROUP );
         List<StudentsInfo> studentsInfo =  new ArrayList<>();
         ResultSet resultSet = idbExecute.execute(listStudentQuery);
 
@@ -35,5 +34,16 @@ public class StudentInfoTable extends TableAbs {
             studentsInfo.add(studentInfo);
         }
         return studentsInfo;
+    }
+    private static String createSelectStm(String ... args){
+        StringBuffer sql = new StringBuffer("SELECT ");
+        for(int i = 0; i < args.length - 1; i++) {
+            sql.append(args[i]);
+            sql.append(", ");
+        }
+        sql.delete(sql.length() - 2, sql.length() - 1);
+        sql.append(" FROM ");
+        sql.append(args[args.length - 1]);
+        return sql.toString();
     }
 }
